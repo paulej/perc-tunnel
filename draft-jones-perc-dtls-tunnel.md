@@ -9,7 +9,7 @@
     Title = "DTLS Tunnel between Media Distribution Device and Key Management Function to Facilitate Key Exchange"
     abbrev = "DTLS Tunnel for PERC"
     category = "std"
-    docName = "draft-jones-perc-dtls-tunnel-01"
+    docName = "draft-jones-perc-dtls-tunnel-02"
     ipr= "trust200902"
     area = "Internet"
     keyword = ["PERC", "SRTP", "RTP", "DTLS", "DTLS-SRTP", "DTLS tunnel", "conferencing", "security"]
@@ -44,6 +44,7 @@
     #        Simplified the text overall.
     #        Removed the "conference identifier".
     #        Much editorial cleanup.
+    #   02 - The protection profile was inadvertently left out of the Key Info message.
     #
 %%%
 
@@ -67,14 +68,14 @@ By establishing this DTLS tunnel between the MDD and KMF and implementing the pr
 
 # Conventions Used In This Document
 
-The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL NOT**", "**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this document are to be interpreted as described in RFC 2119 [@!RFC2119] when they appear in ALL CAPS.  These words may also appear in this document in lower case as plain English words, absent their normative meanings.
+The key words "**MUST**", "**MUST NOT**", "**REQUIRED**", "**SHALL**", "**SHALL NOT**", "**SHOULD**", "**SHOULD NOT**", "**RECOMMENDED**", "**MAY**", and "**OPTIONAL**" in this document are to be interpreted as described in [@!RFC2119] when they appear in ALL CAPS.  These words may also appear in this document in lower case as plain English words, absent their normative meanings.
 
 # Tunneling Concept
 
 A DTLS association (tunnel) is established between the MDD and the KMF.  This tunnel is used to relay DTLS messages between the endpoint and KMF, as depicted in (#fig-tunnel):
 
 {#fig-tunnel align="center"}
-```
+~~~
                         +------------------------------+
 +-----+                 |        Switching MDD         |
 |     |                 |                              |
@@ -89,7 +90,7 @@ A DTLS association (tunnel) is established between the MDD and the KMF.  This tu
                                  +----------+
                                  | Endpoint |
                                  +----------+
-```
+~~~
 Figure: DTLS Tunnel to KMF
 
 The three entities involved in this communication flow are the endpoint, the MDD, and the KMF. The behavior of each entity is described in (#tunneling-procedures).
@@ -100,10 +101,10 @@ The KMF is a logical function that might might be co-resident with a key managem
 
 This section provides an example message flow to help clarify the procedures described later in this document.  Note that it is assumed that a mutually authenticated DTLS association is already established between the MDD and KMF for the purpose of sending tunneled messages.
 
-Once the tunnel is established, it is possible for the MDD to relay the DTLS messages between the endpoint and the KMF. (#fig-message-flow) shows a message flow wherein the endpoint uses DTLS-SRTP to establish an association with the KMF.  In the process, the MDD shares its supported SRTP protection profile information and the KMF shares HBH key material and selected cipher with the MDD.  The message used to tunnel the DTLS messages is named "Tunnel" and can include Profiles or Key Info data.
+Once the tunnel is established, it is possible for the MDD to relay the DTLS messages between the endpoint and the KMF. (#fig-message-flow) shows a message flow wherein the endpoint uses DTLS-SRTP to establish an association with the KMF.  In the process, the MDD shares its supported SRTP protection profile information (see [@!RFC5764]) and the KMF shares HBH key material and selected cipher with the MDD.  The message used to tunnel the DTLS messages is named "Tunnel" and can include Profiles or Key Info data.
 
 {#fig-message-flow align="center"}
-```
+~~~
 Endpoint                     MDD                       KMF
     |                         |                         |
     |------------------------>|========================>|
@@ -120,7 +121,7 @@ Endpoint                     MDD                       KMF
     |  DTLS handshake message |       Tunnel + Key Info |
     |    (including Finished) |                         |
     |                         |                         |
-```
+~~~
 Figure: Sample DTLS-SRTP Exchange via the Tunnel
 
 Each of these tunneled messages on the right-hand side of (#fig-message-flow) is a message of type "Tunnel" (see (#tunneling-protocol)).  Each message contains the following information:
@@ -183,7 +184,7 @@ The tunneling protocol is transmitted over the DTLS association established betw
 
 Tunneled DTLS messages are transported via the "Tunnel" message as application data between the MDD and the KMF.  The "Tunnel" Message has the following format:
 
-```
+~~~
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+-------------------------------+
@@ -199,7 +200,7 @@ Tunneled DTLS messages are transported via the "Tunnel" message as application d
 :                     Tunneled DTLS Message                     :
 :                                                               :
 +---------------------------------------------------------------+
-```
+~~~
 
 Version (H): This is the protocol major version number (set to 0x01).
 
@@ -215,7 +216,7 @@ Tunneled DTLS Message: This is the DTLS message exchanged between the endpoint a
 
 Each Tunnel message transmitted by the MDD contains an array of SRTP protection profiles at the end of the message.  The format of the message is shown below:
 
-```
+~~~
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+-------------------------------+
@@ -235,7 +236,7 @@ Each Tunnel message transmitted by the MDD contains an array of SRTP protection 
 +---------------+---------------+                               : 
 :                      Protection Profiles                      :
 +---------------------------------------------------------------+
-```
+~~~
 
 Beyond the fields included in the Tunnel message, this message introduces the following additional fields.
 
@@ -249,7 +250,7 @@ Protection Profiles: This is an array of two-octet SRTP protection profile value
 
 When the KMF has key information to share with the MDD so it can perform HBH encryption and authentication on received media packets, the KMF will send a Tunnel message with the Key Info appended as shown below:
 
-```
+~~~
  0                   1                   2                   3
  0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1 2 3 4 5 6 7 8 9 0 1
 +---------------+---------------+-------------------------------+
@@ -265,7 +266,9 @@ When the KMF has key information to share with the MDD so it can perform HBH enc
 :                     Tunneled DTLS Message                     :
 :                                                               :
 +---------------+-------------------------------+---------------+
-| Data Type     | MKI Length    | Master Key Identifier (MKI)   ~
+| Data Type     |      Protection Profile       | MKI Length    |
++---------------+-------------------------------+---------------+
+~                 Master Key Identifier (MKI)                   ~
 +---------------+---------------+-------------------------------+
 | CWSMK Length                  |                               :
 +-------------------------------+                               :
@@ -283,11 +286,13 @@ When the KMF has key information to share with the MDD so it can perform HBH enc
 +-------------------------------+                               :
 :                 Server Write SRTP Master Salt                 :
 +---------------------------------------------------------------+
-```
+~~~
 
 Beyond the fields included in the Tunnel message, this message introduces the following additional fields.
 
 Data Type: Indicates the type of data that follows.  For key information, this value is 0x02.
+
+Protection Profile: This is the SRTP protection profile (see [@!RFC5764]) the MDD MUST use to encrypt and decrypt packets sent and received between itself and the endpoint.
 
 MKI Length: This is the length in octets of the MKI field.  A value of zero indicates that the MKI field is absent.
 
