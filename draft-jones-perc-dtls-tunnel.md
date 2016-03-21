@@ -169,19 +169,19 @@ The MDD **MUST** forward all messages received from either the endpoint or the K
 
 ## Key Management Function Tunneling Procedures
 
-The KMF **MUST** be prepared to establish one or more tunnels (DTLS associations) with an MDD for the purpose of receiving and sending DTLS messages, that will be relayed via a given MDD, with one or more endpoints.  The KMF acts as a server and the MDD acts as a client to establish a tunnel.
+The KMF **MUST** be prepared to establish one or more tunnels (DTLS associations) with the MDD for the purpose of relaying DTLS messages between an endpoint and the KMF.  The KMF acts as a server and the MDD acts as a client to establish a tunnel.
 
 When the MDD relays a DTLS message from an endpoint, the MDD will include an association identifier that is unique per endpoint-originated DTLS association and is relayed via the tunnel.  The association identifier remains constant for the life of the DTLS association.  The KMF identifies each distinct endpoint-originated DTLS association by the association identifier and the tunnel over which the DTLS association was established.  
 
 The KMF **MUST** encapsulate the DTLS message inside a Tunnel message (see (#tunneling-protocol)) when sending a message to an endpoint.  
 
-The KMF **MUST** use the same association identifier in messages sent to an endpoint and **MUST** send all messages for a given endpoint DTLS association via the same tunnel.  This ensures MDD operations can forward the messages to the correct endpoint.
+The KMF **MUST** use the same association identifier in messages sent to an endpoint and **MUST** send all messages for a given endpoint DTLS association via the same tunnel.  This ensures the MDD can forward the messages to the correct endpoint.
 
 The KMF extracts tunneled DTLS messages from an endpoint and acts on those messages as if that endpoint had established the DTLS association directly with the KMF, which is acting as the server and the endpoint as the client.  The handling of the messages and certificates is exactly the same as normal DTLS-SRTP procedures between endpoints. 
 
 The KMF **MUST** send a DTLS Finished message to the endpoint at the point the the DTLS handshake completes.  This is accomplished by utilizing the Tunnel + Key Info message.  The Key Info includes the selected cipher (i.e. protection profile), SRTP master keys and SRTP master salt values.
 
-The KMF **MUST** select a cipher that can supported by both the endpoint and the MDD for proper operations.
+The KMF **MUST** select a cipher that is supported by both the endpoint and the MDD for proper operations.
 
 # Tunneling Protocol
 
