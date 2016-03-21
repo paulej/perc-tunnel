@@ -179,7 +179,7 @@ The KMF **MUST** use the same association identifier in messages sent to an endp
 
 The KMF extracts tunneled DTLS messages from an endpoint and acts on those messages as if that endpoint had established the DTLS association directly with the KMF, which is acting as the server and the endpoint as the client.  The handling of the messages and certificates is exactly the same as normal DTLS-SRTP procedures between endpoints. 
 
-The KMF **MUST** send a DTLS Finished message to the endpoint at the point the the DTLS handshake completes.  This is accomplished by utilizing the Tunnel + Key Info message.  The Key Info includes the selected cipher (i.e. protection profile), SRTP master keys and SRTP master salt values.
+The KMF **MUST** send a DTLS Finished message to the endpoint at the point the the DTLS handshake completes.  This is accomplished by utilizing the Tunnel + Key Info message.  The Key Info includes the selected cipher (i.e. protection profile), , MKI [@!RFC3711] value (if any), SRTP master keys, and SRTP master salt values.
 
 The KMF **MUST** select a cipher that is supported by both the endpoint and the MDD for proper operations.
 
