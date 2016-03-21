@@ -1,4 +1,5 @@
 %%%
+
     #
     # DTLS Tunnel for PERC
     #
@@ -46,6 +47,7 @@
     #        Much editorial cleanup.
     #   02 - The protection profile was inadvertently left out of the Key Info message.
     #
+
 %%%
 
 .# Abstract
@@ -93,9 +95,9 @@ A DTLS association (tunnel) is established between the MDD and the KMF.  This tu
 ~~~
 Figure: DTLS Tunnel to KMF
 
-The three entities involved in this communication flow are the endpoint, the MDD, and the KMF. The behavior of each entity is described in (#tunneling-procedures).
+The three entities involved in this communication flow are the endpoint, the MDD, and the KMF.  The behavior of each entity is described in (#tunneling-procedures).
 
-The KMF is a logical function that might might be co-resident with a key management server operated by an enterprise, reside in one of the endpoints participating in the conference, or elsewhere that is trusted with E2E key material.  This document does not preclude any location, it only requires that the KMF not allow the MDD to gain access to the E2E key material by following the operations defined.
+The KMF is a logical function that might might be co-resident with a key management server operated by an enterprise, reside in one of the endpoints participating in the conference, or elsewhere that is trusted with E2E key material.  This document does not preclude any location, only requiring that the KMF not allow the MDD to gain access to the E2E key material by following the operations defined.
 
 # Example Message Flows
 
