@@ -116,7 +116,7 @@ Endpoint                     MDD                       KMF
     |<------------------------|<========================|
     | DTLS handshake message  |                  Tunnel |
     |                         |                         |
-       .... may be multiple handshake messages ...
+         .... may be multiple handshake messages ...
     |------------------------>|========================>|
     | DTLS handshake message  | Tunnel + Profiles       |
     |                         |                         |
