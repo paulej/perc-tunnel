@@ -202,7 +202,7 @@ Tunneled DTLS messages are transported via the "Tunnel" message as application d
 |                                                               |
 |                               +-------------------------------+
 |                               |  DTLS Message Length          |
-+-------------------------------+-------------------------------:
++-------------------------------+-------------------------------+
 :                                                               :
 :                     Tunneled DTLS Message                     :
 :                                                               :
@@ -234,13 +234,13 @@ Each Tunnel message transmitted by the MDD contains an array of SRTP protection 
 |                                                               |
 |                               +-------------------------------+
 |                               |  DTLS Message Length          |
-+-------------------------------+-------------------------------:  
++-------------------------------+-------------------------------+
 :                                                               :
 :                     Tunneled DTLS Message                     :
 :                                                               :
 +---------------+---------------+-------------------------------+
-| Data Type     | Length        |                               : 
-+---------------+---------------+                               : 
+| Data Type     | Length        |                               :
++---------------+---------------+                               :
 :                      Protection Profiles                      :
 +---------------------------------------------------------------+
 ~~~
@@ -268,7 +268,7 @@ When the KMF has key information to share with the MDD so it can perform HBH enc
 |                                                               |
 |                               +---------------+---------------+
 |                               |  DTLS Message Length          |
-+-------------------------------+-------------------------------: 
++-------------------------------+-------------------------------+
 :                                                               :
 :                     Tunneled DTLS Message                     :
 :                                                               :
